@@ -1,20 +1,27 @@
 Header
   CHECK KEYWORDS Warn
-  Mesh DB "mesh" "Hl_Filter_Zhai_a16"
+  Mesh DB "mesh" "Hl_Filter_Zhai_a08"
+! This is an alternative mesh
+! >ElmerGrid 1 2 filter.grd
+! Mesh DB "." "filter"
   Include Path ""
   Results Directory "res"
 End
 
 Simulation
-  Max Output Level = 5
+  Max Output Level = 6
   Coordinate System = Cartesian
-  Coordinate Mapping(3) = 1 2 3
+
+! When using the filter.grd file that is in different coordinate system
+!  Coordinate Mapping(3) = 2 3 1
+!  Coordinate Scaling = 1.0e-3
+
   Simulation Type = Scanning
   Steady State Max Iterations = 1
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  $ te = 151
+  $ te = 3
   Timestep intervals = $ te
   Timestep Sizes = 1
 End
@@ -37,8 +44,9 @@ End
 Solver 1
   Equation = Vector Helmholtz Equation
   Procedure = "VectorHelmholtz" "VectorHelmholtzSolver"
-  Variable = E[E re:1 E:1]
-!  Linear System Preconditioning Damp Coefficient im = 1.0
+  Variable = E[E re:1 E im:1]
+  Mass-proportional Damping = True
+  Linear System Preconditioning Damp Coefficient im = -1.0
   Optimize Bandwidth = True
   Steady State Convergence Tolerance = 1.0e-5
   Nonlinear System Convergence Tolerance = 1.0e-7
@@ -50,16 +58,17 @@ Solver 1
   Linear System Iterative Method = BiCGStabl ! gcr ! idrs
   Linear System Max Iterations = 1000
   Linear System Convergence Tolerance = 1.0e-7
-  BiCGstabl polynomial degree = 8 ! 4...8
-  Linear System Preconditioning = none !ILU2 !vanka
-  Linear System ILUT Tolerance = 1.0e-3
+  BiCGstabl polynomial degree = 4 ! 4...8
+  Linear System Preconditioning = ILUT
+!  Linear System Preconditioning = vanka3 ! vanka2 is poor for quadratic elements
+  Linear System ILUT Tolerance = 9.0e-3
   Linear System Abort Not Converged = False
-  Linear System Residual Output = 10
+  Linear System Residual Output = 1
   Linear System Precondition Recompute = 1
   Idrs Parameter = 6
   
 !  Linear System Row Equilibration = True
-!  Quadratic Approximation = Logical True ! piola automatically follows 2nd order
+  Quadratic Approximation = True ! piola automatically follows 2nd order
 End
 
 Solver 2
@@ -80,10 +89,12 @@ Solver 2
   Linear System Max Iterations = 1000
   Linear System Convergence Tolerance = 1.0e-10
   BiCGstabl polynomial degree = 2
-  Linear System Preconditioning = none 
+  Linear System Preconditioning = vanka2 !none 
   Linear System ILUT Tolerance = 1.0e-3
   Linear System Abort Not Converged = False
   Linear System Residual Output = 10
+
+  Exec Solver = never
 End
 
 Solver 3
@@ -97,8 +108,9 @@ Solver 4
   Exec Solver = after timestep
   Equation = "result output"
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
-  Output File Name = "run"
+  Output File Name = "str"
   Vtu Format = Logical True
+  Save geometry Ids = True
 End
 	
 Equation 1
@@ -116,7 +128,8 @@ Material 1
 End
 
 Boundary Condition 1
-  Target Boundaries(1) = 3
+! The BCs 4 & 5 are only for the filter.grd
+  Target Boundaries(3) = 3 4 5
   Name = "PEC"
   E re {e} = 0
   E im {e} = 0
