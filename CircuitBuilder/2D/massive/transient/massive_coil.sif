@@ -148,6 +148,8 @@ Solver 3
   Procedure = "MagnetoDynamics" "MagnetoDynamicsCalcFields"
   Calculate Current Density = Logical True 
   Calculate Magnetic Vector Potential = Logical True
+  Calculate Nodal Fields = False
+  Calculate Elemental Fields = True
 End
 
 
