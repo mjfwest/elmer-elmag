@@ -159,8 +159,8 @@ For i In {0:N_ss-1}
 	 	EndIf
  	EndIf
 
-	//if mirrorred, then the lines order is reversed
-	//direction is important defining the Line Loops
+	// if mirrorred, then the lines order is reversed
+	// direction is important defining the Line Loops
  	rev = (half ? -1 : 1);
 
 	//surface of the slot conductors
