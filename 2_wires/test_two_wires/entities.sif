@@ -1,0 +1,18 @@
+!------ Skeleton for body section -----
+Body 1
+  Name = wire_1
+End
+
+Body 2
+  Name = wire_2
+End
+
+Body 3
+  Name = air
+End
+
+!------ Skeleton for boundary section -----
+Boundary Condition 1
+  Name = boundary
+End
+
