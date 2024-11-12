@@ -25,6 +25,7 @@
 # Imported Libraries:
 import sys
 import elmer_circuitbuilder as cb
+import re
 
 # -----------------------------------------------------------------------------------------------------
 
@@ -42,9 +43,9 @@ def main(argv=None):
     c[1].ref_node = 2
 
     # Components
-    i1 = cb.I("I1", 1, 2, 10.0)
-    wire_1 = cb.ElmerComponent("wire_1", 1, 3, 1, ["wire_1"])
-    wire_2 = cb.ElmerComponent("wire_2", 3, 2, 2, ["wire_2"])
+    i1 = cb.I("I1", 1, 3, 1.0)
+    wire_1 = cb.ElmerComponent("wire_1", 1, 2, 1, [1])
+    wire_2 = cb.ElmerComponent("wire_2", 3, 2, 2, [2])
     # store components in array components = [comp1, comp2,...] - do not remove
     c[1].components.append([i1, wire_1, wire_2])
     # ------------------ Circuit 2 (Current Source )---------------------
@@ -53,6 +54,15 @@ def main(argv=None):
 
     # generate elmer circuit.definitions - do not remove / do not edit
     cb.generate_elmer_circuits(c, output_file)
+    # fix the sources.
+    regex = r"(Real MATC \")([A-Za-z]+\d*)(\"$)"
+    subst = "\\g<1>\\g<2>*sin(omega*tx)\\g<3>"
+    with open(output_file, "r") as infile, open(
+        "modified_" + output_file, "w"
+    ) as outfile:
+        for line in infile:
+            result = re.sub(regex, subst, line, 0, re.MULTILINE)
+            outfile.write(result)
 
     return 0
 
