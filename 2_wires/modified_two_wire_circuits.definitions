@@ -12,12 +12,12 @@ $ Circuits = 1
 ! -----------------------------------------------------------------------------
 
 ! General Parameters 
-$ I1 = 1
+$ I1 = 1.0
 
-! Parameters in Component 1: T1
-$ Ns_T1 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)
-! Parameters in Component 2: T2
-$ Ns_T2 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)
+! Parameters in Component 1: wire_1
+$ Ns_wire_1 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)
+! Parameters in Component 2: wire_2
+$ Ns_wire_2 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)
 
 ! -----------------------------------------------------------------------------
 ! Matrix Size Declaration and Matrix Initialization
@@ -73,17 +73,17 @@ $ C.1.B(7,0) = 1
 ! Additions in SIF file
 ! -----------------------------------------------------------------------------
 Component 1
-  Name = "T1"
+  Name = "wire_1"
   Master Bodies(1) = 1
   Coil Type = "Massive"
-  Symmetry Coefficient = Real $ 1/(Ns_T1)
+  Symmetry Coefficient = Real $ 1/(Ns_wire_1)
 End 
 
 Component 2
-  Name = "T2"
+  Name = "wire_2"
   Master Bodies(1) = 2
   Coil Type = "Massive"
-  Symmetry Coefficient = Real $ 1/(Ns_T2)
+  Symmetry Coefficient = Real $ 1/(Ns_wire_2)
 End 
 
 ! -----------------------------------------------------------------------------
@@ -92,7 +92,7 @@ End
 
 Body Force 1
   I1_Source = Variable "time" 
-  	 Real MATC "I1"
+  	 Real MATC "I1*sin(omega*tx)"
 End
 
 ! -----------------------------------------------------------------------------

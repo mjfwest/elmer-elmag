@@ -1,7 +1,7 @@
 ! A simple testcase for testing CircuitsAndDynamics module.
 ! Author: Martin West
+!------------------------------------------------------
 Check Keywords "Warn"
-
 !---------------------------------------------------------
 !MESH DATA  
 !---------------------------------------------------------
@@ -10,12 +10,11 @@ Header 1
 End
 !---------------------------------------------------------
 
-
 !---------------------------------------------------------
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 2e3
+$ freq = 25e3
 $ omega = 2*pi*freq
 $ phase = 0
 $ stepsPerPeriod = 100
@@ -26,7 +25,7 @@ $ stepsize=(periods/freq)/nsteps
 !---------------------------------------------------------
 ! Include Directories (Parameters and Circuit Sources)
 !---------------------------------------------------------
-Include "two_wire_circuits.definitions"
+Include "modified_two_wire_circuits.definitions"
 
 !---------------------------------------------------------
 ! CONSTANTS
@@ -74,7 +73,7 @@ End
 
 Body 3
    Name = air
-   Equation = 1
+   Equation = 2
    Material = 1
 End
 
@@ -96,14 +95,14 @@ End
 Material 1
    Name = air
    Electric Conductivity = 0
-   Relative Permeability = 1
+   Relative Permeability = 1.0
    Relative Permittivity = 1.0
 End
 
 Material 2
    Name = aluminium
    Relative Permeability = 1
-   Electric Conductivity = 3.7e7
+   Electric Conductivity = 37e6
    Relative Permittivity = 1.0
 End
 
@@ -139,7 +138,7 @@ Solver 2
   Linear System GCR Restart = 100
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 1.e-6
+  Linear System Convergence Tolerance = 0.5e-5
   Linear System Max Iterations = 300
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True
@@ -171,12 +170,11 @@ Solver 5
    Procedure = "CircuitsAndDynamics" "CircuitsOutput"
 End
 
-!Solver 6
-!   Exec Solver = Always
-!   Equation = "sv"
-!   Procedure = "SaveData" "SaveScalars"
-!   Filename = 1381/dat/1381.dat
-!End
+Solver 6
+   Exec Solver = After Timestep
+   Procedure = "SaveData" "SaveScalars"
+   Filename = res/f1.dat
+End
 
 
 
