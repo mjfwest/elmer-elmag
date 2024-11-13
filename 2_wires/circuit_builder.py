@@ -24,7 +24,7 @@
 # -----------------------------------------------------------------------------------------------------
 # Imported Libraries:
 import sys
-from elmer_circuitbuilder import *
+import elmer_circuitbuilder as cb
 import re
 
 # -----------------------------------------------------------------------------------------------------
@@ -33,29 +33,28 @@ import re
 def main(argv=None):
 
     # name output file
-    output_file = "transient_circuit.definition"
+    output_file = "two_wire_circuits.definitions"
 
     # initialize circuits: number of circuits - do not remove
-    c = number_of_circuits(1)
+    c = cb.number_of_circuits(1)
 
-    # ------------------ Circuit 1 (Current Source - Harmonic)---------------------
-
+    # ------------------ Circuit 1 (Current Source )---------------------
     # reference/ground node needed - do not remove.
     c[1].ref_node = 2
 
     # Components
-    I1 = I("I1", 1, 3, 1)
-    Terminal_1 = ElmerComponent("T1", 1, 2, 1, [1])
-    Terminal_2 = ElmerComponent("T2", 3, 2, 2, [2])
-
+    i1 = cb.I("I1", 1, 3, 1.0)
+    wire_1 = cb.ElmerComponent("wire_1", 1, 2, 1, [1])
+    # wire_2 = cb.ElmerComponent("wire_2", 3, 2, 2, [2])
+    resistor = cb.R("R1", 3, 2, 0.0001)
     # store components in array components = [comp1, comp2,...] - do not remove
-    c[1].components.append([I1, Terminal_1, Terminal_2])
+    c[1].components.append([i1, wire_1, resistor])
+    # ------------------ Circuit 2 (Current Source )---------------------
 
     # --------------------------------------------------
 
     # generate elmer circuit.definitions - do not remove / do not edit
-    generate_elmer_circuits(c, output_file)
-
+    cb.generate_elmer_circuits(c, output_file)
     # fix the sources.
     regex = r"(Real MATC \")([A-Za-z]+\d*)(\"$)"
     subst = "\\g<1>\\g<2>*sin(omega*tx)\\g<3>"
@@ -70,4 +69,4 @@ def main(argv=None):
 
 
 if __name__ == "__main__":
-    sys.exit(main() or 0)
+    sys.exit(main())
