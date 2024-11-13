@@ -20,7 +20,13 @@ $ phase = 0
 $ stepsPerPeriod = 100
 $ periods = 1
 $ nsteps = periods*stepsPerPeriod
-$ stepsize=(periods/freq)/nsteps
+
+$ stepsize(0)=(periods/freq)/(nsteps*4)
+$ stepsize(1)=(periods/freq)/nsteps
+$ stepsize(2)=(periods/freq)/nsteps
+$ timestep(0) = nsteps/10
+$ timestep(1) = 2*nsteps/5
+$ timestep(2) = nsteps
 
 !---------------------------------------------------------
 ! Include Directories (Parameters and Circuit Sources)
@@ -39,16 +45,16 @@ End
 ! SIMULATION CONFIGURATION 
 !---------------------------------------------------------
 Simulation
-  Max Output Level = 7
+  Max Output Level = 3
   Coordinate System = "Cartesian"
   Simulation Type = "Transient"
   !-----------Transient Simulation Parameters ------------
   TimeStepping Method = BDF
   BDF Order = 1
-  Timestep Sizes(1) = Real $stepsize
-  TimeStep Intervals(1) = $nsteps
+  Timestep Sizes(3) = $stepsize
+  TimeStep Intervals(3) = $timestep
   !-------------------------------
-  Output Intervals(1) = 1
+  Output Intervals(3) =  0 0 1
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End
@@ -138,7 +144,7 @@ Solver 2
   Linear System GCR Restart = 100
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 0.5e-5
+  Linear System Convergence Tolerance = 0.18e-5
   Linear System Max Iterations = 300
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True
@@ -156,7 +162,7 @@ Solver 3
 End
 
 Solver 4
-   Exec Solver = After Timestep
+   Exec Solver = After Saving
    Equation = "ResultOutput"
    Procedure = "ResultOutputSolve" "ResultOutputSolver"
    Output File Name = "../results/s"
@@ -173,7 +179,7 @@ End
 Solver 6
    Exec Solver = After Timestep
    Procedure = "SaveData" "SaveScalars"
-   Filename = res/f1.dat
+   Filename = results/f1.dat
 End
 
 
