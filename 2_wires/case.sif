@@ -14,7 +14,7 @@ End
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 25e3
+$ freq = 5e2
 $ omega = 2*pi*freq
 $ phase = 0
 $ stepsPerPeriod = 100
