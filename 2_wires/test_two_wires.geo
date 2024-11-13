@@ -4,8 +4,8 @@ radius = 0.002/2;
 lc = radius/5;
 b_mult = 10;
 boundary = radius * b_mult;
-wire_spacing = 8 * radius;
-delta = radius / 6; // estimated skin depth, for denser meshing.
+wire_spacing = 2.1 * radius;
+delta = radius / 8; // estimated skin depth, for denser meshing.
 
 //+
 SetFactory("OpenCASCADE");
@@ -77,7 +77,7 @@ Line(32) = {3, 23};
 Line(33) = {4, 24};
 Line(34) = {5, 25};
 
-Transfinite Curve{1, 21, 2, 22, 3, 23, 4, 24} = 30;
+Transfinite Curve{1, 21, 2, 22, 3, 23, 4, 24} = 40;
 Transfinite Curve{31, 32, 33, 34} = 10 Using Progression 1.0;
 
 //+ wire 2
