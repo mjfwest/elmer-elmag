@@ -4,10 +4,6 @@ Body 1
 End
 
 Body 2
-  Name = wire_2
-End
-
-Body 3
   Name = air
 End
 

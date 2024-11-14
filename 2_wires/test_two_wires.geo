@@ -1,11 +1,15 @@
 // Gmsh project created on Mon Oct 21 10:39:37 2024
 // define a variable radius
-radius = 0.002/2;
+radius = 0.004/2;
 lc = radius/5;
-b_mult = 10;
+b_mult = 5;
 boundary = radius * b_mult;
-wire_spacing = 2.1 * radius;
-delta = radius / 8; // estimated skin depth, for denser meshing.
+frequency = 50e3;
+sigma=37e6;
+mu = 1.25663706212e-6;
+delta = Min(Sqrt(2/(2*Pi*frequency*sigma*mu))*2, radius*0.7);
+wire_spacing = 0.1 * radius;
+
 
 //+
 SetFactory("OpenCASCADE");
@@ -41,13 +45,13 @@ Point(9) = {-boundary, 0, 0, lc * b_mult  * 0.25};
 //+ wire_2
 Point(10) = {0 + wire_spacing, 0, 0, lc *1.5};
 //+
-Point(11) = {0 + wire_spacing, radius, 0, lc/2};
+//Point(11) = {0 + wire_spacing, radius, 0, lc/2};
 //+
-Point(12) = {radius + wire_spacing, 0, 0, lc/2};
+//Point(12) = {radius + wire_spacing, 0, 0, lc/2};
 //+
-Point(13) = {0+wire_spacing, -radius, 0, lc/2};
+//Point(13) = {0+wire_spacing, -radius, 0, lc/2};
 //+
-Point(14) = {-radius + wire_spacing, 0, 0, lc/2};
+//Point(14) = {-radius + wire_spacing, 0, 0, lc/2};
 
 //+
 Point(15) = {0+wire_spacing, boundary, 0, lc * b_mult * 0.25};
@@ -77,17 +81,17 @@ Line(32) = {3, 23};
 Line(33) = {4, 24};
 Line(34) = {5, 25};
 
-Transfinite Curve{1, 21, 2, 22, 3, 23, 4, 24} = 40;
-Transfinite Curve{31, 32, 33, 34} = 10 Using Progression 1.0;
+Transfinite Curve{1, 21, 2, 22, 3, 23, 4, 24} = 50;
+Transfinite Curve{31, 32, 33, 34} = 30 Using Progression 1.0;
 
 //+ wire 2
-Circle(11) = {11, 10, 12};
+//Circle(11) = {11, 10, 12};
 //+
-Circle(12) = {12, 10, 13};
+//Circle(12) = {12, 10, 13};
 //+
-Circle(13) = {13, 10, 14};
+//Circle(13) = {13, 10, 14};
 //+
-Circle(14) = {14, 10, 11};
+//Circle(14) = {14, 10, 11};
 
 
 //+ right hand boundary
@@ -120,20 +124,20 @@ Recombine Surface{21, 22, 23, 24};
 
 
 //+ Wire 2
-Curve Loop(17) = {-14, -13, -12, -11};
-Plane Surface(2) = {17};
+//Curve Loop(17) = {-14, -13, -12, -11};
+//Plane Surface(2) = {17};
 
 // boundary
 Curve Loop(19) = {-10, -9, -8,-7,-6,-5};
 // air
-Plane Surface(3) = {19, 25, 17};
+Plane Surface(3) = {19, 25};
 
 //+
 Physical Surface("wire_1", 1) = {1, 21, 22, 23, 24};
-Point{1} In Surface{1} ;
+//Point{1} In Surface{1} ;
 //+
-Physical Surface("wire_2", 2) = {2};
-Point{10} In Surface{2} ;
+//Physical Surface("wire_2", 2) = {2};
+//Point{10} In Surface{2} ;
 //+
 Physical Surface("air", 3) = {3};
 //+
