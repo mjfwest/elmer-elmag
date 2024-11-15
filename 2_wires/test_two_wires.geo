@@ -120,7 +120,7 @@ Plane Surface(23) = {23};
 Plane Surface(24) = {24};
 
 Transfinite Surface{21, 22, 23, 24};
-Recombine Surface{21, 22, 23, 24};
+//Recombine Surface{21, 22, 23, 24};
 
 
 //+ Wire 2
