@@ -6,7 +6,7 @@ b_mult = 10;
 boundary = radius * b_mult;
 delta = radius / 4; // estimated skin depth, for denser meshing.
 structured_mesh_circumfrential_density = 180;
-structured_mesh_radial_density = 10;
+structured_mesh_radial_density = 20;
 //+
 SetFactory("OpenCASCADE");
 
