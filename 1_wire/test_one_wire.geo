@@ -9,7 +9,7 @@ sigma = 37e6;
 mu = 1.25663706212e-6;
 delta = Min(Sqrt(2/(2*Pi*frequency*sigma*mu))*2, radius*0.7);
 structured_mesh_circumfrential_density = 180;
-structured_mesh_radial_density = 10;
+structured_mesh_radial_density = 20;
 //+
 SetFactory("OpenCASCADE");
 

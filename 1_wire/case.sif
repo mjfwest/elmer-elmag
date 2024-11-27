@@ -17,7 +17,7 @@ End
 $ freq = 50e3
 $ omega = 2*pi*freq
 $ phase = 0
-$ stepsPerPeriod = 100
+$ stepsPerPeriod = 200
 $ periods = 1
 $ nsteps = periods*stepsPerPeriod
 
@@ -54,7 +54,7 @@ Simulation
   Timestep Sizes(3) = $stepsize
   TimeStep Intervals(3) = $timestep
   !-------------------------------
-  Output Intervals(3) =  0 0 1
+  Output Intervals(3) =  0 0 2
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End
@@ -137,8 +137,8 @@ Solver 2
   Linear System GCR Restart = 100
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 0.2e-5
-  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 0.1e-6
+  Linear System Max Iterations = 1500
   Linear System Abort Not Converged = Logical False
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True
