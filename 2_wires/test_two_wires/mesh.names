@@ -1,6 +1,5 @@
 ! ----- names for bodies -----
 $ wire_1 = 1
-$ wire_2 = 2
-$ air = 3
+$ air = 2
 ! ----- names for boundaries -----
 $ boundary = 1

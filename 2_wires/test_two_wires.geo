@@ -1,13 +1,17 @@
 // Gmsh project created on Mon Oct 21 10:39:37 2024
 // define a variable radius
-radius = 0.002/2;
+radius = 0.004/2;
 lc = radius/5;
-b_mult = 10;
+b_mult = 5;
 boundary = radius * b_mult;
-wire_spacing = 2.1 * radius;
-delta = radius / 4; // estimated skin depth, for denser meshing.
+frequency = 50e3;
+sigma = 37e6;
+mu = 1.25663706212e-6;
+delta = Min(Sqrt(2/(2*Pi*frequency*sigma*mu))*2, radius*0.7);
+wire_spacing = 0.1 * radius;
 structured_mesh_circumfrential_density = 180;
 structured_mesh_radial_density = 10;
+
 //+
 SetFactory("OpenCASCADE");
 
@@ -42,11 +46,11 @@ Point(9) = {-boundary, 0, 0, lc * b_mult  * 0.5};
 //+ wire_2
 Point(10) = {0 + wire_spacing, 0, 0, lc *1.5};
 //+
-Point(11) = {0 + wire_spacing, radius, 0, lc/2};
+//Point(11) = {0 + wire_spacing, radius, 0, lc/2};
 //+
-Point(12) = {radius + wire_spacing, 0, 0, lc/2};
+//Point(12) = {radius + wire_spacing, 0, 0, lc/2};
 //+
-Point(13) = {0+wire_spacing, -radius, 0, lc/2};
+//Point(13) = {0+wire_spacing, -radius, 0, lc/2};
 //+
 Point(14) = {-radius + wire_spacing, 0, 0, lc/2};
 
@@ -136,7 +140,7 @@ Plane Surface(23) = {23};
 Plane Surface(24) = {24};
 
 Transfinite Surface{21, 22, 23, 24};
-Recombine Surface{21, 22, 23, 24};
+//Recombine Surface{21, 22, 23, 24};
 
 
 //+ Wire 2
@@ -165,7 +169,7 @@ Plane Surface(3) = {19, 25, 31};
 
 //+
 Physical Surface("wire_1", 1) = {1, 21, 22, 23, 24};
-Point{1} In Surface{1} ;
+//Point{1} In Surface{1} ;
 //+
 Physical Surface("wire_2", 2) = {2, 27, 28, 29, 30};
 Point{10} In Surface{2} ;

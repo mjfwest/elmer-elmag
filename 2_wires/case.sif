@@ -14,10 +14,10 @@ End
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 5e2
+$ freq = 50e3
 $ omega = 2*pi*freq
 $ phase = 0
-$ stepsPerPeriod = 100
+$ stepsPerPeriod = 200
 $ periods = 1
 $ nsteps = periods*stepsPerPeriod
 
@@ -38,7 +38,7 @@ Include "modified_two_wire_circuits.definitions"
 !---------------------------------------------------------
 Constants
   Permittivity of Vacuum = 8.8542e-12
-  Permeability of Vacuum = 1.256e-6
+  Permeability of Vacuum = 1.25663706212e-06
 End
 
 !---------------------------------------------------------
@@ -54,7 +54,7 @@ Simulation
   Timestep Sizes(3) = $stepsize
   TimeStep Intervals(3) = $timestep
   !-------------------------------
-  Output Intervals(3) =  0 0 1
+  Output Intervals(3) =  0 0 2
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End
@@ -70,16 +70,16 @@ Body 1
    Body Force = 1
 End
 
-Body 2
-   Name = wire_2
-   Equation = 2
-   Material = 1
+!Body 2
+!   Name = wire_2
+!   Equation = 2
+!   Material = 1
 !  Body Force = 1
-End
+!End
 
-Body 3
+Body 2
    Name = air
-   Equation = 2
+   Equation = 1
    Material = 1
 End
 
@@ -107,7 +107,7 @@ End
 
 Material 2
    Name = aluminium
-   Relative Permeability = 1
+   Relative Permeability = 1.0
    Electric Conductivity = 37e6
    Relative Permittivity = 1.0
 End
@@ -144,8 +144,8 @@ Solver 2
   Linear System GCR Restart = 100
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 0.2e-5
-  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1e-6
+  Linear System Max Iterations = 1500
   Linear System Abort Not Converged = Logical False
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True

@@ -1,0 +1,6 @@
+pyvista[jupyter]
+imageio
+pint
+scipy
+trame
+ipywidgets
