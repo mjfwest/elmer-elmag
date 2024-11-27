@@ -14,11 +14,11 @@ End
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 50e3
+$ freq = 200e3
 $ omega = 2*pi*freq
 $ phase = 0
-$ stepsPerPeriod = 200
-$ periods = 1
+$ stepsPerPeriod = 400
+$ periods = 2
 $ nsteps = periods*stepsPerPeriod
 
 $ stepsize(0)=(periods/freq)/(nsteps*4)
@@ -54,7 +54,7 @@ Simulation
   Timestep Sizes(3) = $stepsize
   TimeStep Intervals(3) = $timestep
   !-------------------------------
-  Output Intervals(3) =  0 0 2
+  Output Intervals(3) =  0 0 4
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End

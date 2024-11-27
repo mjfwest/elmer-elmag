@@ -46,7 +46,7 @@ def main(argv=None):
     i1 = cb.I("I1", 1, 3, 1.0)
     wire_1 = cb.ElmerComponent("wire_1", 1, 2, 1, [1])
     # wire_2 = cb.ElmerComponent("wire_2", 3, 2, 2, [2])
-    resistor = cb.R("R1", 3, 2, 0.0001)
+    resistor = cb.R("R1", 3, 2, 0.00001)
     # store components in array components = [comp1, comp2,...] - do not remove
     c[1].components.append([i1, wire_1, resistor])
     # ------------------ Circuit 2 (Current Source )---------------------

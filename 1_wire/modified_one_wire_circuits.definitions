@@ -13,7 +13,7 @@ $ Circuits = 1
 
 ! General Parameters 
 $ I1 = 1.0
-$ R1 = 0.0001
+$ R1 = 1e-05
 
 ! Parameters in Component 1: wire_1
 $ Ns_wire_1 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)

@@ -1,10 +1,10 @@
 // Gmsh project created on Mon Oct 21 10:39:37 2024
 // define a variable radius
 radius = 0.004/2;
-lc = radius/5;
-b_mult = 5;
+lc = radius/10;
+b_mult = 6;
 boundary = radius * b_mult;
-frequency = 50e3;
+frequency = 200e3;
 sigma = 37e6;
 mu = 1.25663706212e-6;
 delta = Min(Sqrt(2/(2*Pi*frequency*sigma*mu))*2, radius*0.7);
@@ -16,21 +16,33 @@ SetFactory("OpenCASCADE");
 //+ wire_1
 Point(1) = {0, 0, 0, lc*1.5};
 //+
-Point(2) = {0, radius, 0, lc};
+Point(2) = {0, radius, 0, lc/5};
 //+
-Point(3) = {radius, 0, 0, lc};
+Point(3) = {radius, 0, 0, lc/5};
 //+
-Point(4) = {0, -radius, 0, lc};
+Point(4) = {0, -radius, 0, lc/5};
 //+
-Point(5) = {-radius, 0, 0, lc};
+Point(5) = {-radius, 0, 0, lc/5};
 
-Point(22) = {0, radius-delta, 0, lc};
-//+
-Point(23) = {radius-delta, 0, 0, lc};
-//+
-Point(24) = {0, -radius+delta, 0, lc};
-//+
-Point(25) = {-radius+delta, 0, 0, lc};
+
+Point(10) = {(radius-delta) * Sin(0*Pi/8), (radius-delta)* Cos(0*Pi/8), 0, lc/3};
+Point(11) = {(radius-delta) * Sin(1*Pi/8), (radius-delta)* Cos(1*Pi/8), 0, lc/3};
+Point(12) = {(radius-delta) * Sin(2*Pi/8), (radius-delta)* Cos(2*Pi/8), 0, lc/3};
+Point(13) = {(radius-delta) * Sin(3*Pi/8), (radius-delta)* Cos(3*Pi/8), 0, lc/3};
+Point(14) = {(radius-delta) * Sin(4*Pi/8), (radius-delta)* Cos(4*Pi/8), 0, lc/3};
+Point(15) = {(radius-delta) * Sin(5*Pi/8), (radius-delta)* Cos(5*Pi/8), 0, lc/3};
+Point(16) = {(radius-delta) * Sin(6*Pi/8), (radius-delta)* Cos(6*Pi/8), 0, lc/3};
+Point(17) = {(radius-delta) * Sin(7*Pi/8), (radius-delta)* Cos(7*Pi/8), 0, lc/3};
+Point(18) = {(radius-delta) * Sin(8*Pi/8), (radius-delta)* Cos(8*Pi/8), 0, lc/3};
+Point(19) = {(radius-delta) * Sin(9*Pi/8), (radius-delta)* Cos(9*Pi/8), 0, lc/3};
+Point(20) = {(radius-delta) * Sin(10*Pi/8), (radius-delta)* Cos(10*Pi/8), 0, lc/3};
+Point(21) = {(radius-delta) * Sin(11*Pi/8), (radius-delta)* Cos(11*Pi/8), 0, lc/3};
+Point(22) = {(radius-delta) * Sin(12*Pi/8), (radius-delta)* Cos(12*Pi/8), 0, lc/3};
+Point(23) = {(radius-delta) * Sin(13*Pi/8), (radius-delta)* Cos(13*Pi/8), 0, lc/3};
+Point(24) = {(radius-delta) * Sin(14*Pi/8), (radius-delta)* Cos(14*Pi/8), 0, lc/3};
+Point(25) = {(radius-delta) * Sin(15*Pi/8), (radius-delta)* Cos(15*Pi/8), 0, lc/3};
+
+
 
 //+
 Point(6) = {0, boundary, 0, lc * b_mult * 0.5};
@@ -52,20 +64,6 @@ Circle(2) = {3, 1, 4};
 Circle(3) = {4, 1, 5};
 //+
 Circle(4) = {5, 1, 2};
-//
-Circle(21) = {22, 1, 23};
-Circle(22) = {23, 1, 24};
-Circle(23) = {24, 1, 25};
-Circle(24) = {25, 1, 22};
-
-Line(31) = {2, 22};
-Line(32) = {3, 23};
-Line(33) = {4, 24};
-Line(34) = {5, 25};
-
-Transfinite Curve{1, 21, 2, 22, 3, 23, 4, 24} = structured_mesh_circumfrential_density/4;
-Transfinite Curve{31, 32, 33, 34} = structured_mesh_radial_density Using Progression 1.0;
-
 
 //+ right hand boundary
 Circle(5) = {6, 1, 7};
@@ -78,21 +76,9 @@ Circle(9) = {9, 1, 6};
 //+ 
 
 //+ Wire 1
-Curve Loop(15) = {-24, -23, -22, -21};
-Plane Surface(1) = {15};
-Curve Loop(21) = {31, 21, -32, -1};
-Curve Loop(22) = {32, 22, -33, -2};
-Curve Loop(23) = {33, 23, -34, -3};
-Curve Loop(24) = {34, 24, -31, -4};
+
 Curve Loop(25) = {-4, -3, -2, -1};
-Plane Surface(21) = {21};
-Plane Surface(22) = {22};
-Plane Surface(23) = {23};
-Plane Surface(24) = {24};
-
-Transfinite Surface{21, 22, 23, 24};
-Recombine Surface{21, 22, 23, 24};
-
+Plane Surface(1) = {25};
 
 // boundary
 Curve Loop(19) = {-9, -8,-6, -5};
@@ -100,9 +86,10 @@ Curve Loop(19) = {-9, -8,-6, -5};
 Plane Surface(3) = {19, 25};
 
 //+
-Physical Surface("wire_1", 1) = {1, 21, 22, 23, 24};
+Physical Surface("wire_1", 1) = {1};
 Point{1} In Surface{1} ;
-//+
+Point{10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25} In Surface{1} ;
+//
 Physical Surface("air", 3) = {3};
 //+
 Physical Curve("boundary", 1) = {5, 6, 8 ,9 };

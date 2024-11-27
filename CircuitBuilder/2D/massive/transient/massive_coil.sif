@@ -32,7 +32,7 @@ $ stepsize=(periods/freq)/nsteps
 !---------------------------------------------------------
 !Include Directories (Parameters and Circuit Sources)
 !---------------------------------------------------------
-Include "transient_circuit.definition"
+Include "modified_transient_circuit.definition"
 
 !---------------------------------------------------------
 !SIMULATION CONFIGURATION 
