@@ -31,7 +31,7 @@ $ timestep(2) = nsteps
 !---------------------------------------------------------
 ! Include Directories (Parameters and Circuit Sources)
 !---------------------------------------------------------
-Include "modified_two_wire_circuits.definitions"
+Include "modified_one_wire_circuits.definitions"
 
 !---------------------------------------------------------
 ! CONSTANTS
@@ -71,15 +71,8 @@ Body 1
 End
 
 Body 2
-   Name = wire_2
-   Equation = 2
-   Material = 1
-!  Body Force = 1
-End
-
-Body 3
    Name = air
-   Equation = 2
+   Equation = 1
    Material = 1
 End
 
