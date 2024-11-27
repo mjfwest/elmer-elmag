@@ -6,7 +6,7 @@ Check Keywords "Warn"
 !MESH DATA  
 !---------------------------------------------------------
 Header 1
-   Mesh DB "." "test_two_wires"
+   Mesh DB "." "test_one_wire"
 End
 !---------------------------------------------------------
 
@@ -14,7 +14,7 @@ End
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 5e2
+$ freq = 50e3
 $ omega = 2*pi*freq
 $ phase = 0
 $ stepsPerPeriod = 100

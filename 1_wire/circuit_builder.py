@@ -33,7 +33,7 @@ import re
 def main(argv=None):
 
     # name output file
-    output_file = "two_wire_circuits.definitions"
+    output_file = "one_wire_circuits.definitions"
 
     # initialize circuits: number of circuits - do not remove
     c = cb.number_of_circuits(1)

@@ -1,12 +1,15 @@
 // Gmsh project created on Mon Oct 21 10:39:37 2024
 // define a variable radius
-radius = 0.002/2;
+radius = 0.004/2;
 lc = radius/5;
-b_mult = 10;
+b_mult = 5;
 boundary = radius * b_mult;
-delta = radius / 4; // estimated skin depth, for denser meshing.
+frequency = 50e3;
+sigma = 37e6;
+mu = 1.25663706212e-6;
+delta = Min(Sqrt(2/(2*Pi*frequency*sigma*mu))*2, radius*0.7);
 structured_mesh_circumfrential_density = 180;
-structured_mesh_radial_density = 20;
+structured_mesh_radial_density = 10;
 //+
 SetFactory("OpenCASCADE");
 
