@@ -17,16 +17,17 @@ End
 $ freq = 200e3
 $ omega = 2*pi*freq
 $ phase = 0
-$ stepsPerPeriod = 400
-$ periods = 2
-$ nsteps = periods*stepsPerPeriod
 
-$ stepsize(0)=(periods/freq)/(nsteps*4)
-$ stepsize(1)=(periods/freq)/nsteps
-$ stepsize(2)=(periods/freq)/nsteps
-$ timestep(0) = nsteps/10
-$ timestep(1) = 2*nsteps/5
-$ timestep(2) = nsteps
+$ stepsPerPeriod(0) = 400
+$ stepsPerPeriod(1) = 100
+$ stepsPerPeriod(2) = 200
+
+$ periods(0) = 0.25
+$ periods(1) = 1.75
+$ periods(2) = 1 
+
+$ stepsize = stepsPerPeriod/freq
+$ timestep = periods * stepsPerPeriod
 
 !---------------------------------------------------------
 ! Include Directories (Parameters and Circuit Sources)
@@ -46,15 +47,15 @@ End
 !---------------------------------------------------------
 Simulation
   Max Output Level = 3
-  Coordinate System = "Cartesian"
+  Coordinate System = "Cartesian 2D"
   Simulation Type = "Transient"
   !-----------Transient Simulation Parameters ------------
   TimeStepping Method = BDF
-  BDF Order = 1
+  BDF Order = 2
   Timestep Sizes(3) = $stepsize
   TimeStep Intervals(3) = $timestep
   !-------------------------------
-  Output Intervals(3) =  0 0 4
+  Output Intervals(3) =  0 0 2
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End
@@ -134,12 +135,12 @@ Solver 2
   Procedure = "MagnetoDynamics2D" "MagnetoDynamics2D"
   Linear System Solver = Iterative
   Linear System Iterative Method = GCR
-  Linear System GCR Restart = 100
+  Linear System GCR Restart = 50
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 0.1e-6
-  Linear System Max Iterations = 1500
-  Linear System Abort Not Converged = Logical False
+  Linear System Convergence Tolerance = 0.5e-5
+  Linear System Max Iterations = 150
+  Linear System Abort Not Converged = Logical True
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True
 End
