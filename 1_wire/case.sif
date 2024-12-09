@@ -14,19 +14,23 @@ End
 !Parameters
 !---------------------------------------------------------
 
-$ freq = 200e3
+$ freq = 2500
 $ omega = 2*pi*freq
 $ phase = 0
-$ stepsPerPeriod = 400
-$ periods = 2
-$ nsteps = periods*stepsPerPeriod
+$ stepsPerPeriod = 180 360
+$ periods = 2 1
+$ nsteps = periods*stepsPerPeriod;
+$ stepsize=(1/freq)/stepsPerPeriod;
+$ timestep = nsteps
+$fprintf( stderr, "freq: ");
+$fprintf( stderr, "%.2f\n", freq);
+$fprintf( stderr, "stepsPerPeriod: ");
+$fprintf(stderr,  "%g, %g \n", stepsPerPeriod);
+$fprintf( stderr, "timestep: ");
+$fprintf(stderr,  "%g, %g \n", timestep);
+$fprintf( stderr, "stepsize: ");
+$fprintf(stderr,  "%g, %g \n", stepsize);
 
-$ stepsize(0)=(periods/freq)/(nsteps*4)
-$ stepsize(1)=(periods/freq)/nsteps
-$ stepsize(2)=(periods/freq)/nsteps
-$ timestep(0) = nsteps/10
-$ timestep(1) = 2*nsteps/5
-$ timestep(2) = nsteps
 
 !---------------------------------------------------------
 ! Include Directories (Parameters and Circuit Sources)
@@ -51,10 +55,10 @@ Simulation
   !-----------Transient Simulation Parameters ------------
   TimeStepping Method = BDF
   BDF Order = 1
-  Timestep Sizes(3) = $stepsize
-  TimeStep Intervals(3) = $timestep
+  Timestep Sizes(2) = $stepsize
+  TimeStep Intervals(2) = $timestep
   !-------------------------------
-  Output Intervals(3) =  0 0 4
+  Output Intervals(2) =  0 1
   Steady State Max Iterations = 1
   Use Mesh Names = True
 End
@@ -82,8 +86,7 @@ End
 
 Boundary Condition 1
   Name = boundary
-  Az re = Real 0
-  Az im = Real 0
+  A = Real 0
 End
 
 
@@ -137,8 +140,8 @@ Solver 2
   Linear System GCR Restart = 100
   Linear System Residual Output = 20
   Linear System preconditioning = Circuit
-  Linear System Convergence Tolerance = 0.1e-6
-  Linear System Max Iterations = 1500
+  Linear System Convergence Tolerance = 0.1e-7
+  Linear System Max Iterations = 500
   Linear System Abort Not Converged = Logical False
   ! Needed for strong coupling with circuits
   Export Lagrange Multiplier = True

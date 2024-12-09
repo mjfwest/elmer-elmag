@@ -1,5 +1,5 @@
 ! -----------------------------------------------------------------------------
-! ElmerFEM Circuit Generated: November 27, 2024
+! ElmerFEM Circuit Generated: December 09, 2024
 ! -----------------------------------------------------------------------------
 
 ! -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@ $ Circuits = 1
 
 ! General Parameters 
 $ I1 = 1.0
-$ R1 = 1e-05
+$ R1 = 1e-03
 
 ! Parameters in Component 1: wire_1
 $ Ns_wire_1 = 1	 ! Sector/Symmetry Coefficient (e.g. 4 is 1/4 of the domain)
