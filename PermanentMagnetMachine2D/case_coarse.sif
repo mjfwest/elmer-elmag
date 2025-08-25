@@ -252,7 +252,7 @@ Solver 2
 	Linear System Solver = Direct
 	Linear System Direct Method = umfpack
 	! Linear System Solver = Iterative
-  ! Linear System Iterative Method = BiCGStab
+  	Linear System Iterative Method = idrs
 	Optimize Bandwidth = Logical True
 	Linear System Preconditioning =  ILU2
 	Linear System Max Iterations =  5000
@@ -273,6 +273,8 @@ Solver 3
 	Calculate Maxwell Stress = Logical True
 	Calculate JxB = Logical True
 	Calculate Magnetic Field Strength = Logical True
+	Calculate Nodal Fields = False
+	Calculate Elemental Fields = True
 End
 
 Solver 4

@@ -112,14 +112,7 @@ End
 Material 6
 	Name = "PM_1"
 	Relative Permeability = 1.03
-!	Magnetization 1 = Variable time, timestep size
-!		Real MATC  "H_PM*cos(rot_dir*WM*(tx(0)-tx(1)) + 0*pi/PP + 0*pi + (RotorInitPos + Mangle1)*pi/180)"
-!	Magnetization 2 = Variable time, timestep size
-!		Real MATC "H_PM*sin(rot_dir*WM*(tx(0)-tx(1)) + 0*pi/PP + 0*pi + (RotorInitPos + Mangle1)*pi/180)"
-!		Real MATC  "H_PM*cos(rot_dir*WM*(t
-
-
-        Magnetization 1 = #H_PM*math.cos(0*pi/PP + 0*pi + (RotorInitPos + Mangle1)*pi/180)
+    Magnetization 1 = #H_PM*math.cos(0*pi/PP + 0*pi + (RotorInitPos + Mangle1)*pi/180)
 	Magnetization 2 = #H_PM*math.sin(0*pi/PP + 0*pi + (RotorInitPos + Mangle1)*pi/180)
 
         Electric Conductivity = 625000.0 !0
